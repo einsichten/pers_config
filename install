@@ -1,0 +1,48 @@
+#!/usr/bin/bash
+alias_etc=.zalias_etc
+configurations=(.virc $alias_etc .gitconfig)
+commands=(eslint_init git_init)
+command_dir=/usr/bin
+
+bold="\e[1m"
+regular="\e[0m"
+
+case "$1" in
+    --reverse)
+        reverse=true
+        echo -e "${bold}Reading files to current directory${regular}"
+        ;;
+    *)
+        if [ -z "$1" ]; then
+            echo -e "${bold}Distributing files${regular}"
+        else
+            echo "Unknown option"
+            exit 1
+        fi
+        ;;
+esac
+
+source_alias="source \$HOME/$alias_etc"
+if ! grep -q "$source_alias" ~/.zshrc ; then
+    echo -e "${bold}Adding $source_alias to ~/.zshrc${regular}"
+    echo $source_alias >> ~/.zshrc
+fi
+
+printf "Copying personal configuration files\n"
+for f in "${configurations[@]}"
+do
+    if [ "$reverse" = true ]; then
+        cp -v "$HOME/$f" ./"$f"
+    else
+        cp -vi "$f" "$HOME/$f"
+    fi
+done
+printf "\nCopying personal commands\n"
+for f in "${commands[@]}"
+do
+    if [ "$reverse" = true ]; then
+        cp -v "$command_dir/$f" "$f"
+    else
+        cp -v "$f" "$command_dir/$f"
+    fi
+done

@@ -1,0 +1,44 @@
+#!/bin/bash
+remote_host=$primary_remote_host
+remote_repo_dir="/gitrepos/$1.git"
+gitignore_default="VisualStudio.gitignore"
+gitignore="$gitignore_folder/$gitignore_default"
+
+Bold="\e[1m"
+NoFormatting="\e[0m"
+
+usage () {
+    echo "usage: $0 'new repository name'";
+}
+
+if [ -z "$1" ]; then
+    usage
+    exit 1
+fi
+
+for f in *; do # Files and folder, not matching ".*"
+    [ -e "$f" ] && break || echo "Nothing to commit"; exit
+done
+
+# ssh $remote_host "test -e $remote_repo_dir"
+# if [ $? -eq 0 ]; then
+#     echo "Remote repository exists"
+#     exit
+# fi
+
+git init    # You have to init before remote operations
+            # to handle sub repositories properly
+
+echo -e $Bold;
+cp -v "$gitignore" .gitignore;
+echo -e $NoFormatting
+
+git add --all -v
+git commit -m "initial"
+
+echo -e "${Bold}Creating remote repository $remote_repo_dir on $remote_host${NoFormatting}"
+ssh $remote_host "mkdir $remote_repo_dir && git init --bare $remote_repo_dir"
+[ $? -eq 0 ] || exit
+
+git remote add origin "$remote_host:$remote_repo_dir"
+git push -u origin master

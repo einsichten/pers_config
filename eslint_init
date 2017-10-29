@@ -1,0 +1,24 @@
+#!/bin/bash
+if [ -f package.json ]; then
+  echo "npm is initialized"
+else
+  npm init -y
+fi
+for f in .eslintrc.*; do
+    if [ -f $f ]; then
+      echo "$f already exists. Exiting."
+      exit 0
+    fi
+done
+npm install -D eslint eslint-plugin-standard eslint-plugin-promise eslint-config-standard
+cat <<EOT > .eslintrc.yml
+extends: standard
+plugins:
+  - standard
+  - promise
+env:
+  node: true
+  mocha: true
+rules:
+  no-console: 0
+EOT
