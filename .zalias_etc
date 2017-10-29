@@ -6,8 +6,6 @@
 doc="$HOME/Dokumente"
 pi=pi@192.168.0.185
 montage=/c/oko/montage/main/mondb/flexwave_fx2/montage
-
-export gitignore_folder="$doc/.gitignore-files"
 export primary_remote_host=$pi
 
 bindkey '^h' backward-delete-word

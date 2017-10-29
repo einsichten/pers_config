@@ -1,43 +1,43 @@
 #!/usr/bin/bash
 alias_etc=.zalias_etc
-configurations=(.virc $alias_etc .gitconfig)
+configurations=(.virc $alias_etc .gitconfig .gitignore-files)
 commands=(eslint_init git_init)
 command_dir=/usr/bin
 
-bold="\e[1m"
-regular="\e[0m"
+bold=$(tput bold)
+normal=$(tput sgr0)
 
 case "$1" in
     --reverse)
         reverse=true
-        echo -e "${bold}Reading files to current directory${regular}"
+        # Reading files to current directory
         ;;
     *)
-        if [ -z "$1" ]; then
-            echo -e "${bold}Distributing files${regular}"
-        else
+        if [ -n "$1" ]; then
             echo "Unknown option"
             exit 1
         fi
+        # Distributing files
         ;;
 esac
 
 source_alias="source \$HOME/$alias_etc"
 if ! grep -q "$source_alias" ~/.zshrc ; then
-    echo -e "${bold}Adding $source_alias to ~/.zshrc${regular}"
+    echo  "${bold}Adding $source_alias to ~/.zshrc${normal}"
     echo $source_alias >> ~/.zshrc
 fi
 
-printf "Copying personal configuration files\n"
+echo "${bold}Copying personal configuration files${normal}"
 for f in "${configurations[@]}"
 do
     if [ "$reverse" = true ]; then
-        cp -v "$HOME/$f" ./"$f"
+        cp -rvT "$HOME/$f" ./"$f"
     else
-        cp -vi "$f" "$HOME/$f"
+        cp -rviT "$f" "$HOME/$f"
     fi
 done
-printf "\nCopying personal commands\n"
+
+echo "${bold}Copying personal commands${normal}"
 for f in "${commands[@]}"
 do
     if [ "$reverse" = true ]; then

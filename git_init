@@ -4,8 +4,8 @@ remote_repo_dir="/gitrepos/$1.git"
 gitignore_default="VisualStudio.gitignore"
 gitignore="$gitignore_folder/$gitignore_default"
 
-Bold="\e[1m"
-NoFormatting="\e[0m"
+bold=$(tput bold)
+normal=$(tput sgr0)
 
 usage () {
     echo "usage: $0 'new repository name'";
@@ -29,14 +29,14 @@ done
 git init    # You have to init before remote operations
             # to handle sub repositories properly
 
-echo -e $Bold;
-cp -v "$gitignore" .gitignore;
-echo -e $NoFormatting
+echo "${bold}"
+cp -v "$gitignore" .gitignore
+echo "${normal}"
 
 git add --all -v
-git commit -m "initial"
+git commit -m "Initial"
 
-echo -e "${Bold}Creating remote repository $remote_repo_dir on $remote_host${NoFormatting}"
+echo "${bold}Creating remote repository $remote_repo_dir on $remote_host${normal}"
 ssh $remote_host "mkdir $remote_repo_dir && git init --bare $remote_repo_dir"
 [ $? -eq 0 ] || exit
 
