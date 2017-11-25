@@ -1,48 +1,68 @@
 #!/usr/bin/bash
-alias_etc=.zalias_etc
-configurations=(.virc $alias_etc .gitconfig .gitignore-files)
+alias_etc=.home.zsh
 commands=(eslint_init git_init)
 command_dir=/usr/bin
+dotfiles=($alias_etc .host.Triple10.zsh .host.DEAGM02828.zsh .gitconfig .gitignore-files .virc)
+source_alias="source \$HOME/$alias_etc"
 
 bold=$(tput bold)
 normal=$(tput sgr0)
 
+function main() {
 case "$1" in
     --reverse)
-        reverse=true
-        # Reading files to current directory
+        copyFiles --reverse  # Reading files to current directory
         ;;
+    --diff) # todo: new changes only
+        if [ -n "$(git status --short)" ]; then
+          echo "Changes in local directory. Commit or 'git clean -f'"
+          exit 1
+        fi
+        reverse=true
+        copyFiles --reverse > /dev/null 2>&1  # Ignore non-existing files
+        git diff
+        git clean -f > /dev/null
+        git reset --hard > /dev/null
+    ;;
     *)
         if [ -n "$1" ]; then
             echo "Unknown option"
             exit 1
         fi
-        # Distributing files
+        copyFiles
         ;;
 esac
+}
 
-source_alias="source \$HOME/$alias_etc"
-if ! grep -q "$source_alias" ~/.zshrc ; then
-    echo  "${bold}Adding $source_alias to ~/.zshrc${normal}"
-    echo $source_alias >> ~/.zshrc
+function copyFiles()  {
+if [ -z "$1" ]; then
+    if ! grep -q "$source_alias" ~/.zshrc; then
+      echo  "${bold}Adding $source_alias to ~/.zshrc${normal}"
+      echo $source_alias >> ~/.zshrc
+  fi
 fi
 
 echo "${bold}Copying personal configuration files${normal}"
-for f in "${configurations[@]}"
+for f in "${dotfiles[@]}"
 do
-    if [ "$reverse" = true ]; then
-        cp -rvT "$HOME/$f" ./"$f"
+    if [ "$1" == "--reverse" ]; then
+        cp -vrT "$HOME/$f" ./"$f"
     else
-        cp -rviT "$f" "$HOME/$f"
-    fi
+        cp -vrT "$f" "$HOME/$f"  # -T is necessary for copying folders
+    fi                           # i.e.: .gitignore-files/
+
 done
 
+echo
 echo "${bold}Copying personal commands${normal}"
 for f in "${commands[@]}"
 do
-    if [ "$reverse" = true ]; then
+    if [ "$1" == "--reverse" ]; then
         cp -v "$command_dir/$f" "$f"
     else
         cp -v "$f" "$command_dir/$f"
     fi
 done
+}
+
+main "$@"

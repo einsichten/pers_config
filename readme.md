@@ -1,22 +1,25 @@
 # Personal Configuration
 
-Minimalist configuration, I don't wanna miss. Maybe you find something useful.
+My zsh, git, vi configuration, I don't wanna miss. Maybe you find something useful.
 
 ## How to use it
 
 ```sh
 git clone git://github.com/einsichten/pers_config && cd pers_config
+./install --diff
 ./install
 ```
 
-The `install` command is copying custom commands and configuration files. Look into it. If you have corresponding configuration files in place, it asks you for overwrite. Maybe you just want to append. All files are **not** meant to be used, without looking at them in detail.
+The `install --diff` command tells you, which content will be changed by `install`.
 
-After copying, you may want to change the files, and read them back to the repository directory:
+The `install` command copies and overwrites custom commands and configuration files. If overwriting all your corresponding files is not an option, you can select which files to copy and which parts of the other files you want to integrate into your existing files. The files to be copied are listed in the first lines of `install`.
+
+This repository is plug and play, but only for me. It is configured for my needs and the hosts I use. To make make it fit for you, you have to adapt it. Read the code. Take some of the ideas that went into it. Find something useful for your own configurations, commands and their deployment.
+
+After changing and adding files I read them back into the repository with:
 
 ```sh
 ./install --reverse
 ```
 
-Have fun!
-
-
+Followed by a commit. Have fun!

@@ -4,6 +4,7 @@
 	trustctime = false
 	editor = vim
 	filemode = false
+	pager = less -F -X
 [color]
 	ui = true
 [credential]

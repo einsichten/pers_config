@@ -20,11 +20,11 @@ for f in *; do # Files and folder, not matching ".*"
     [ -e "$f" ] && break || echo "Nothing to commit"; exit
 done
 
-# ssh $remote_host "test -e $remote_repo_dir"
-# if [ $? -eq 0 ]; then
-#     echo "Remote repository exists"
-#     exit
-# fi
+ssh $remote_host "test -e $remote_repo_dir"
+if [ $? -eq 0 ]; then
+    echo "Remote repository exists"
+    exit
+fi
 
 git init    # You have to init before remote operations
             # to handle sub repositories properly
