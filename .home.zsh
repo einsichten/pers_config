@@ -21,6 +21,10 @@ function fnx () { # Find Nth and
   (cd $dir; eval "$@")
 }
 
+function openn () {
+  open $(fnx $searchterm $1)
+}
+
 function svlg () {
   local dir=$(dirname "$1")
   local file=$(basename "$1")
@@ -65,4 +69,7 @@ alias -s zsh=zsh
 today=$(date +%Y-%m-%d)
 doc="$HOME/Dokumente"
 export gitignore_folder="$HOME/.gitignore-files"
-source ".host.${HOSTNAME}.zsh"
+local hostconfig=" .host.${HOSTNAME}.zsh"
+if [[ -e $hostconfig ]] then
+  source $hostconfig
+fi
