@@ -41,16 +41,15 @@ if [ -z "$1" ]; then
       echo $source_alias >> ~/.zshrc
   fi
 fi
-
+dir=$(dirname $0)
 echo "${bold}Copying personal configuration files${normal}"
 for f in "${dotfiles[@]}"
 do
     if [ "$1" == "--reverse" ]; then
-        cp -vrT "$HOME/$f" ./"$f"
+        cp -vrT "$HOME/$f" "$dir/$f"
     else
-        cp -vrT "$f" "$HOME/$f"  # -T is necessary for copying folders
-    fi                           # i.e.: .gitignore-files/
-
+        cp -vrT "$dir/$f" "$HOME/$f"  # -T is necessary for copying folders
+    fi                                # i.e.: .gitignore-files/
 done
 
 echo
@@ -58,9 +57,9 @@ echo "${bold}Copying personal commands${normal}"
 for f in "${commands[@]}"
 do
     if [ "$1" == "--reverse" ]; then
-        cp -v "$command_dir/$f" "$f"
+        cp -v "$command_dir/$f" "$dir/$f"
     else
-        cp -v "$f" "$command_dir/$f"
+        cp -v "$dir/$f" "$command_dir/$f"
     fi
 done
 }

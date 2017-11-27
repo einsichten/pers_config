@@ -11,33 +11,28 @@ function f () { # Find, set 'serachterm',
   find -iname $searchterm | nl
 }
 
-function fnx () { # Find Nth and
-                  # eXecute $3...$N (if given) in directory
-                  # sets $dir of file
-  local filepath=$(find -iname $1 | sed "$2q;d")
+function fn () { # print nth find result from f()
+  local filepath=$(find -iname $searchterm | sed "$1q;d")
   echo $filepath
-  dir=$(dirname $filepath)
-  shift 2
-  (cd $dir; eval "$@")
 }
 
-function openn () {
-  open $(fnx $searchterm $1)
+function fno () { # open nth from find
+  open $(fn $1)
 }
 
-function svlg () {
+function fsvlog () { # Subversion log - usage:
+                     # $ f "myfile*"
+                     # 1 path1/myfile.cs
+                     # 2 path2/myfile.xaml
+                     # $ fsvlog 2
+  svlog $(fn $1)
+}
+
+function svlog () {
   local dir=$(dirname "$1")
   local file=$(basename "$1")
   echo "Subversion log $dir/$file"
   (cd "$dir"; open TortoiseProc /command:log /path:"$file")
-}
-
-function svlog () { # Subversion log - usage:
-                    # $ f "myfile*"
-                    # 1 path1/myfile.cs
-                    # 2 path2/myfile.xaml
-                    # $ svlog 2
-  svlg $(fnx $searchterm $1)
 }
 
 alias a='atom .'
