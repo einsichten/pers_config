@@ -20,7 +20,7 @@ function fno () { # open nth from find
   open $(fn $1)
 }
 
-function fsvlog () { # Subversion log - usage:
+function fnsvlog () { # Subversion log - usage:
                      # $ f "myfile*"
                      # 1 path1/myfile.cs
                      # 2 path2/myfile.xaml
@@ -51,6 +51,7 @@ alias fcsp='find -name "*.csproj" 2>/dev/null'
 alias la='ls -a'
 alias open=cygstart
 alias pi='ssh $pi'
+alias sh='source ~/.home'
 alias tcs='tree --prune -P "*.cs|*.xaml|*.csproj"'
 alias tree='tree -a -I "bin|Debug|Release|.git"'
 alias upda='cp $HOME/pers_config/.h* ~; source ~/.home.zsh  # update alias'
