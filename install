@@ -11,18 +11,32 @@ normal=$(tput sgr0)
 function main() {
 case "$1" in
     --reverse)
+        if local_changes; then
+          echo "Stashing your local changes..."
+          echo "'git stash list', 'git stash drop'"
+          git stash save --all local_changes
+        fi
         copyFiles --reverse  # Reading files to current directory
         ;;
-    --diff) # todo: new changes only
-        if [ -n "$(git status --short)" ]; then
-          echo "Changes in local directory. Commit or 'git clean -f'"
-          exit 1
+    --diff)
+        if local_changes; then
+          git stash save --all local_changes
+          stashed_changes=yes
         fi
-        reverse=true
-        copyFiles --reverse > /dev/null 2>&1  # Ignore non-existing files
-        git diff
-        git clean -f > /dev/null
-        git reset --hard > /dev/null
+
+        copyFiles --reverse > /dev/null 2>&1
+        if ! local_changes
+        then
+          echo "No changes in distributed files"
+          exit 0
+        fi
+        git stash save --all distributed_files
+        if [ "$stashed_changes" = "yes" ]
+        then
+          git stash pop stash@{1}         # put local changes back
+        fi
+        git diff stash
+        git stash drop
     ;;
     *)
         if [ -n "$1" ]; then
@@ -32,6 +46,14 @@ case "$1" in
         copyFiles
         ;;
 esac
+}
+
+function local_changes() {
+  if [ -n "$(git status --short)" ]
+  then
+    return 0; # true
+  fi
+  return 1;
 }
 
 function copyFiles()  {
