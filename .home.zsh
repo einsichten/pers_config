@@ -3,17 +3,16 @@
 # to override aliases and keybindings. Don't source this file in
 # ~/.zprofile, because ~/.zprofile is sourced before ~/.zshrc.
 
-bindkey '^h' backward-delete-word
+bindkey '^_' backward-delete-word # ctrl-backspace
 
-function f () { # Find, set 'serachterm',
-                # number results
-  searchterm="$1"
-  find -iname $searchterm | nl
+function f () {
+  findResults=$(find -iname "$1")
+  echo "$findResults" | nl
+  findResults=$(echo "$findResults" | xargs realpath)
 }
 
-function fn () { # print nth find result from f()
-                 # set filepath to it
-  filepath=$(find -iname $searchterm | sed "$1q;d")
+function fn () {
+  filepath=$(echo "$findResults" | sed "$1q;d")
   echo $filepath
 }
 

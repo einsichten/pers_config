@@ -23,11 +23,13 @@ case "$1" in
           git stash save --all local_changes
           stashed_changes=yes
         fi
-
-        copyFiles --reverse > /dev/null 2>&1
+        copyFiles --reverse > /dev/null 2>&1    # ignore non-existing files
         if ! local_changes
         then
           echo "No changes in distributed files"
+          if [ "$stashed_changes" = "yes" ]; then
+            git stash pop                 # put local changes back
+          fi
           exit 0
         fi
         git stash save --all distributed_files
