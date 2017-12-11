@@ -29,17 +29,22 @@ function svlog () {
 
 alias a='atom .'
 alias e='explorer .'
-alias h=history
+alias h='history|tail -n 20'
 alias l=ls
 
 alias ag='alias|grep'
 alias diff=colordiff
 alias dirs='dirs -v'
-alias gcam='git commit -am'
+alias gcam='git add . && git commit -m'
 alias glog='git log --oneline'
 alias grep='grep -iP'
+alias gsta='git stash apply'
+unalias gstaa
+unalias gstc  # git stash clear too dangerous
+alias gsts='git stash save'
+alias gstll='git stash list --date=local'
+alias gstls='git stash list --date=short'
 alias hg='history|grep'
-alias ht='history|tail'
 alias fcsp='find -name "*.csproj" 2>/dev/null'
 alias fno='open $filepath'
 alias flog='svlog $filepath'
