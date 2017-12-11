@@ -20,25 +20,25 @@ case "$1" in
         ;;
     --diff)
         if local_changes; then
-          git stash save --all local_changes
+          git stash save --all local_changes >/dev/null
           stashed_changes=yes
         fi
-        copyFiles --reverse > /dev/null 2>&1    # ignore non-existing files
+        copyFiles --reverse >/dev/null 2>&1    # ignore non-existing files
         if ! local_changes
         then
           echo "No changes in distributed files"
           if [ "$stashed_changes" = "yes" ]; then
-            git stash pop                 # put local changes back
+            git stash pop >/dev/null            # put local changes back
           fi
           exit 0
         fi
-        git stash save --all distributed_files
+        git stash save --all distributed_files >/dev/null
         if [ "$stashed_changes" = "yes" ]
         then
-          git stash pop stash@{1}         # put local changes back
+          git stash pop stash@{1} >/dev/null    # put local changes back
         fi
         git diff stash
-        git stash drop
+        git stash drop >/dev/null
     ;;
     *)
         if [ -n "$1" ]; then
