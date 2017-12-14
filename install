@@ -37,8 +37,8 @@ case "$1" in
         then
           git stash pop stash@{1} >/dev/null    # put local changes back
         fi
-        git diff stash
-        git stash drop >/dev/null
+        git diff stash                  # show diff distributed_files
+        git stash drop >/dev/null       # reset git state to starting point
     ;;
     *)
         if [ -n "$1" ]; then
