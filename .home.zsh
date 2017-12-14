@@ -10,7 +10,7 @@ function f () {
   findResults=$(find -iname "$1")
   echo "$findResults" | nl
   if [ -n "$findResults" ]; then
-    findResults=$(echo "$findResults" | xargs realpath)
+    findResults=$(echo "$findResults" | sed 's/ /\\ /g' | xargs realpath)
   else
     echo \""$1"\" not found.
   fi
