@@ -58,13 +58,13 @@ alias h='history|tail -n 20'
 alias l=ls
 
 alias ag='alias|grep'
-alias diff='diff --color'
+alias diff='colordiff'
 alias dirs='dirs -v'
 alias gbm='git branch -m' # move=rename
 alias gcam='git add --all && git commit -m'
 alias glog='git log --oneline'
 alias ginit='cp ~/.gitignore-files/VisualStudio.gitignore .gitignore && git init && git add . && git commit -m initial' # git init
-alias grep='grep -iP'
+alias grep='grep -iP --color'
 alias gr='git reset'
 alias gsta='git stash apply'
 unalias gstaa 2>/dev/null # use 'gsta' instead
@@ -76,7 +76,6 @@ alias hg='history|grep'
 alias fcsp='find -name "*.csproj" 2>/dev/null'
 alias la='ls -a'
 alias open=cygstart
-alias pi='ssh $pi'
 alias sortclipboard='sort /dev/clipboard > /dev/clipboard'
 alias souh='source ~/.home.zsh &&'  # source home and command
 alias treecs='tree --prune -P "*.cs|*.xaml|*.csproj"'

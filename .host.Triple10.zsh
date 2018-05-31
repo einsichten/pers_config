@@ -1,3 +1,4 @@
-pi=pi@192.168.0.185
+pi=pi@192.168.0.111
+alias pi='ssh $pi'
 export primary_remote_host=$pi
-montage=/c/oko/montage/main/mondb/flexwave_fx2/montage
+montage=/c/okomai18/montage/main/mondb/flexwave_fx2/montage_dev_sst
