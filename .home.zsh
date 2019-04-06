@@ -53,36 +53,37 @@ function a() {
   fi
 }
 
-alias e='explorer .'
-alias h='history|tail -n 20'
-alias l=ls
-
 alias ag='alias|grep'
 alias diff='colordiff'
 alias dirs='dirs -v'
+alias e='explorer .'
+alias fcsp='find -name "*.csproj" 2>/dev/null'
 alias gbm='git branch -m' # move=rename
 alias gcam='git add --all && git commit -m'
-alias glog='git log --oneline'
 alias ginit='cp ~/.gitignore-files/VisualStudio.gitignore .gitignore && git init && git add . && git commit -m initial' # git init
-alias grep='grep -iP --color'
+alias glog='git log --oneline'
 alias gr='git reset'
+alias grep='grep -iP --color'
 alias gsta='git stash apply'
-unalias gstaa 2>/dev/null # use 'gsta' instead
-unalias gstc  2>/dev/null # git stash clear too dangerous
-alias gsts='git stash save'
 alias gstll='git stash list --date=local'
 alias gstls='git stash list --date=short'
-alias hg='history|grep'
-alias fcsp='find -name "*.csproj" 2>/dev/null'
+alias gsts='git stash save'
+alias h='history|tail -n 20'
+alias hg='history | perl -pe "s:^\s*\d+\s+(.+):\1:" | sort -u | command grep --color -iP'
+alias hng='history | tac | sort -uk 2 | command grep --color -iP'
+alias l=ls
 alias la='ls -a'
 alias open=cygstart
 alias sortclipboard='sort /dev/clipboard > /dev/clipboard'
 alias souh='source ~/.home.zsh &&'  # source home and command
-alias treecs='tree --prune -P "*.cs|*.xaml|*.csproj"'
 alias tree='tree -a -I "bin|Debug|Release|.git"'
+alias treecs='tree --prune -P "*.cs|*.xaml|*.csproj"'
 alias upda='cp $HOME/pers_config/.h* ~; source ~/.home.zsh  # update alias'
 alias vim=vi
 alias wpwd='cygpath -w $(pwd) > /dev/clipboard && echo clipboard contains: $(cat /dev/clipboard)'
+
+unalias gstaa 2>/dev/null # use 'gsta' instead
+unalias gstc  2>/dev/null # git stash clear too dangerous
 
 alias -g 2c='> /dev/clipboard'  # to clipboard
 alias -g ne='2>/dev/null'       # no error

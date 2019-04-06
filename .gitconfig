@@ -3,7 +3,7 @@
 [core]
 	trustctime = false
 	editor = vim
-	filemode = false
+	fileMode = false
 	pager = less -F -X
 [color]
 	ui = true
