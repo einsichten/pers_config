@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 alias_etc=.home.zsh
 commands=(eslint_init git_init)
 command_dir=/usr/bin
