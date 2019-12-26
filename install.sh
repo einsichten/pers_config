@@ -2,7 +2,7 @@
 alias_etc=.home.zsh
 commands=(eslint_init git_init)
 command_dir=/usr/bin
-dotfiles=($alias_etc .host.Triple10.zsh .host.DEAGM02828.zsh .gitconfig .gitignore-files .virc)
+dotfiles=($alias_etc .host.Triple10.zsh .host.DEAGM02828.zsh .gitconfig .gitignore-files .vimrc)
 source_alias="source \$HOME/$alias_etc"
 
 bold=$(tput bold)
