@@ -81,9 +81,9 @@ echo "${bold}Copying personal commands${normal}"
 for f in "${commands[@]}"
 do
     if [ "$1" == "--reverse" ]; then
-        cp -v "$command_dir/$f" "$dir/$f"
+        cp -pv "$command_dir/$f" "$dir/$f"
     else
-        cp -v "$dir/$f" "$command_dir/$f"
+        cp -pv "$dir/$f" "$command_dir/$f"
     fi
 done
 }
