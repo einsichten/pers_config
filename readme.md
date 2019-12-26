@@ -10,7 +10,7 @@ pers_config/install.sh --diff
 pers_config/install.sh
 ```
 
-The `install.sh` command copies and overwrites custom commands and configuration files. If overwriting all your corresponding files is not an option, you can select which files to copy and which parts of the other files you want to integrate into your existing files. The files and the destination directories are listed in the first lines of `install`.
+The `install.sh` command copies and overwrites custom commands and configuration files. If overwriting all your corresponding files is not an option, you can select which files to copy and which parts of the other files you want to integrate into your existing files. The files and the destination directories are listed in the first lines of `install.sh`.
 
 The `install.sh --diff` command tells you, which content will be __changed__ by `install.sh`. A file which is copied the first time, and does not overwrite one of yours, will not be listed.
 
