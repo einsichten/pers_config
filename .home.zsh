@@ -60,23 +60,25 @@ alias e='explorer .'
 alias fcsp='find -name "*.csproj" 2>/dev/null'
 alias gbm='git branch -m' # move=rename
 alias gcam='git add --all && git commit -m'
+alias gd='git diff --color=always'
 alias ginit='cp ~/.gitignore-files/VisualStudio.gitignore .gitignore && git init && git add . && git commit -m initial' # git init
 alias glog='git log --oneline'
 alias gr='git reset'
-alias grep='grep -iP --color'
+alias grep='grep -iP --color=always'
 alias gsta='git stash apply'
 alias gstll='git stash list --date=local'
 alias gstls='git stash list --date=short'
 alias gsts='git stash save'
 alias h='history|tail -n 20'
-alias hg='history | perl -pe "s:^\s*\d+\s+(.+):\1:" | sort -u | command grep --color -iP'
-alias hng='history | tac | sort -uk 2 | command grep --color -iP'
+alias hg='history | perl -pe "s:^\s*\d+\s+(.+):\1:" | sort -u | command grep --color=always -iP'
+alias hng='history | tac | sort -uk 2 | command grep --color=always -iP'
 alias l=ls
 alias la='ls -a'
 alias open=cygstart
 alias sortclipboard='sort /dev/clipboard > /dev/clipboard'
 alias souh='source ~/.home.zsh &&'  # source home and command
-alias tree='tree -a -I "bin|Debug|Release|.git"'
+alias tree='tree -C'
+# alias tree='tree -a -I "bin|Debug|Release|.git"'
 alias treecs='tree --prune -P "*.cs|*.xaml|*.csproj"'
 alias upda='cp $HOME/pers_config/.h* ~; source ~/.home.zsh  # update alias'
 alias vim=vi
@@ -92,9 +94,13 @@ alias -s sh=bash
 alias -s zsh=zsh
 
 doc="$HOME/Dokumente"
-c=/cygdrive/c
+
 export gitignore_folder="$HOME/.gitignore-files"
+export LESS=Xr
+
 local hostconfig="$HOME/.host.${HOSTNAME}.zsh"
 if [[ -e $hostconfig ]] then
   source $hostconfig
 fi
+
+
